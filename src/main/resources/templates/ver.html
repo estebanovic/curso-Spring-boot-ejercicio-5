@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head th:replace="layout/layout :: head"></head>
+    <body>
+        <header th:replace="layout/layout :: header"></header>
+
+        <div class="container py-4">
+
+            <div class="card bg-light">
+                <div class="card-header h1 text-secondary" th:text="${titulo}"></div>
+                <div class="my-4 mx-4">
+                <a class="btn btn-primary" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="'crear factura'"></a>
+                </div>
+                <div class="card-body">
+                    
+                    <img th:if="${#strings.length(cliente.foto) > 0}" class="img-thumbnail rounded float-left" style="max-width: 25%;" th:src="@{'/uploads/' +  ${cliente.foto}}"
+                         th:alt="${cliente.foto}"/>
+
+                    <ul class="list-group">
+                        <li class="list-group-item" th:text="'ID: ' + ${cliente.id}"></li>
+                        <li class="list-group-item" th:text="'Nombre: ' + ${cliente.nombre}"></li>
+                        <li class="list-group-item" th:text="'Apellido: ' + ${cliente.apellido}"></li>
+                        <li class="list-group-item" th:text="'EMail: ' + ${cliente.email}"></li>
+                        <li class="list-group-item" th:text="'Fecha: ' + ${cliente.createAt}"></li>
+                    </ul>
+
+                    <div th:if="${#lists.isEmpty(cliente.facturas)}" class="alert alert-info my-4" th:text="'El usuario ' + ${cliente.getNombre} + ' ' + ${cliente.getApellido} + ' no tiene facturas'" />
+
+                    <table th:if="${not #lists.isEmpty(cliente.facturas)}" class="table table-bordered table-striped my-4">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>folio</th>
+                                <th>descripcion</th>
+                                <th>fecha</th>
+                                <th>total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="factura: ${cliente.facturas}">
+                                <td th:text="${factura.id}"></td>
+                                <td th:text="${factura.descripcion}"></td>
+                                <td th:text="${factura.createAt}"></td>
+                                <td th:text="${factura.getTotal}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="layout/layout :: footer"></footer>
+    </body>
+</html>

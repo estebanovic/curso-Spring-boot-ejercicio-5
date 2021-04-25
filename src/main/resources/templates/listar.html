@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="layout/layout :: head"></head>
+    <body>
+        <header th:replace="layout/layout :: header"></header>
+
+        <div class="container py-4">
+
+            <div class="card">
+
+                <div class="card-header h1 text-secondary" th:text="${titulo}"></div>
+                <div class="card-body">
+
+                    <table class="table table-striped table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>id</th>
+                                <th>nombre</th>
+                                <th>apellido</th>
+                                <th>email</th>
+                                <th>fecha</th>
+                                <th>foto</th>
+                                <th>crear factura</th>
+                                <th>editar</th>
+                                <th>borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cliente: ${clientes}">
+                                <td class="align-middle"><a class="btn btn-primary" th:href="@{/ver/}+${cliente.id}" th:text="${cliente.id}"></a></td>
+                                <td class="align-middle" th:text="${cliente.nombre}"></td>
+                                <td class="align-middle" th:text="${cliente.apellido}"></td>
+                                <td class="align-middle" th:text="${cliente.email}"></td>
+                                <td class="align-middle" th:text="${cliente.createAt}"></td>
+                                <td><img th:if="${#strings.length(cliente.foto) > 0}" class="align-middle rounded d-block mx-auto" style="max-height: 100px; max-width: 100px;" th:src="@{'/uploads/' +  ${cliente.foto}}"
+                 th:alt="${cliente.foto}"/></td>
+                                <td class="align-middle"> <a class="btn btn-success" th:href="@{'/factura/form/' + ${cliente.id}}" th:text="'crear factura'"></a></td>
+                                <td class="align-middle"> <a class="btn btn-primary btn-xs" th:href="@{/form/}+${cliente.id}" th:text='editar'> </a> </td>
+                                <td class="align-middle"> <a class="btn btn-danger btn-xs" th:href="@{/delete/}+${cliente.id}" th:text='borrar' onclick="return confirm('¿Estás seguro de que quieres eliminar el usuario?');"> </a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav th:replace="paginator-nav :: paginator"></nav>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="layout/layout :: footer"></footer>
+</html>
