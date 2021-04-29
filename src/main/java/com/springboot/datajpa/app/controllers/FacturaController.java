@@ -2,13 +2,16 @@ package com.springboot.datajpa.app.controllers;
 
 import com.springboot.datajpa.app.models.entities.Cliente;
 import com.springboot.datajpa.app.models.entities.Factura;
+import com.springboot.datajpa.app.models.entities.Producto;
 import com.springboot.datajpa.app.models.service.IClienteService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -34,5 +37,10 @@ public class FacturaController {
         model.addAttribute("titulo", "crear Factura");
         
         return "factura/form";
+    }
+    
+    @GetMapping(value = "/cargar-productos/{term}", produces = {"application/json"})
+    public @ResponseBody List<Producto> cargarProductos(@PathVariable String term){
+        return clienteService.findByName(term);
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.springboot.datajpa.app.models.dao.IClienteDao;
+import com.springboot.datajpa.app.models.dao.IProductoDao;
+import com.springboot.datajpa.app.models.entities.Producto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -14,6 +16,9 @@ public class ClienteServiceImpl implements IClienteService{
 
     @Autowired
     private IClienteDao clientesDao;
+    
+    @Autowired
+    private IProductoDao productoDao;
     
     @Override
     @Transactional(readOnly = true)
@@ -44,5 +49,9 @@ public class ClienteServiceImpl implements IClienteService{
     public Page<Cliente> findAll(Pageable pageable) {
         return clientesDao.findAll(pageable);
     }
-    
+
+    @Override
+    public List<Producto> findByName(String term) {
+        return productoDao.findByName(term);
+    }
 }

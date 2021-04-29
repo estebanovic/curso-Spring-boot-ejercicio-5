@@ -1,6 +1,7 @@
 package com.springboot.datajpa.app.models.service;
 
 import com.springboot.datajpa.app.models.entities.Cliente;
+import com.springboot.datajpa.app.models.entities.Producto;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,4 +17,6 @@ public interface IClienteService {
     public Cliente findOne(Long id);
 
     public void delete(Long id);
+    
+    public List<Producto> findByName (String term);
 }
